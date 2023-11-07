@@ -101,3 +101,27 @@ btnAgregar.addEventListener('click', () => {
         nuevoItem.textContent = `Nombre: ${data.name}, Apellido: ${data.lastname}`;
         resultsContainer.appendChild(nuevoItem);
     }
+
+   const inputDeleteID = document.getElementById("inputDelete");
+   const btnDeleteID = document.getElementById("btnDelete");
+
+   btnDeleteID.addEventListener("click", () => {
+   fetch(`https://65497572e182221f8d519410.mockapi.io/users/`+ inputDeleteID.value, {
+    method: 'DELETE',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: null
+   }).then(response => {
+    if (!response.ok) {
+        throw new Error('Error en la solicitud Delete');
+    }
+    return response.json();
+})
+.then(data => {
+    mostrarDatosEnLista(data)
+})
+.catch(error => {
+console.error('Error en la solicitud Delete:', error);
+});
+})
