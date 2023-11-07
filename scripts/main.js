@@ -1,12 +1,18 @@
+let URL = 'https://65497572e182221f8d519410.mockapi.io'
+let urlUsuarios = 'https://65497572e182221f8d519410.mockapi.io/users'
+
 document.addEventListener("DOMContentLoaded",()=>{
     const inputPutId = document.getElementById('inputPutId')
     const btnPut = document.getElementById('btnPut')
     const inputPutNombre = document.getElementById('inputPutNombre')
     const inputPutApellido = document.getElementById('inputPutApellido')
+    const btnDelete = document.getElementById('btnDelete')
+    const inputDelete = document.getElementById('inputDelete')
     const btnSendChanges = document.getElementById('btnSendChanges')
     const modalPut = new bootstrap.Modal(document.getElementById('dataModal'), {
         keyboard: false
       })
+      const resultsContainer = document.getElementById('results');
 
     inputPutId.addEventListener("input",()=>{
         btnPut.disabled = inputPutId.value == ""
@@ -40,12 +46,50 @@ document.addEventListener("DOMContentLoaded",()=>{
                 modalPut.hide()
             })
     })
+
+function mostrarListaCompleta() {
+    fetch('https://65497572e182221f8d519410.mockapi.io/users', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('La solicitud GET no fue exitosa');
+        }
+        return response.json();
+      })
+      .then(data => {
+        resultsContainer.innerHTML = '';
+  
+        data.forEach(item => {
+            //Mostralo aca 
+        });
+      })
+      .catch(error => {
+        console.error('Error en la solicitud GET:', error);
+      });
+  }
+  
+  function habilitarBoton(espacioInput, botonSeleccionado) {
+  
+    var valorInput = espacioInput.value;
+    
+    if (valorInput.trim() !== '') {
+      botonSeleccionado.removeAttribute('disabled');
+    } else {
+      botonSeleccionado.disabled = true;
+    }
+    console.log("hola")
+  }
+  
+ 
+
+    inputDelete.addEventListener('change', () =>{
+        habilitarBoton(inputDelete, btnDelete);
+    })
 })
-
-let URL = 'https://65497572e182221f8d519410.mockapi.io'
-let urlUsuarios = 'https://65497572e182221f8d519410.mockapi.io/users'
-
-
 
 const inputNombre = document.getElementById('inputPostNombre');
 const inputApellido = document.getElementById('inputPostApellido');
@@ -61,7 +105,7 @@ btnAgregar.addEventListener('click', () => {
         lastname: apellido
     };
 
-    fetch(URL, {
+    fetch('https://65497572e182221f8d519410.mockapi.io/users', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -78,7 +122,6 @@ btnAgregar.addEventListener('click', () => {
             console.log('Nuevo registro creado:', data);
             inputNombre.value = '';
             inputApellido.value = '';
-            mostrarDatosEnLista(data);
         })
         .catch(error => {
             console.error('Error en la solicitud POST:', error);
@@ -125,3 +168,4 @@ btnAgregar.addEventListener('click', () => {
 console.error('Error en la solicitud Delete:', error);
 });
 })
+
