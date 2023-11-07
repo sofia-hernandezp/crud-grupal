@@ -1,8 +1,13 @@
+let URL = 'https://65497572e182221f8d519410.mockapi.io'
+let urlUsuarios = 'https://65497572e182221f8d519410.mockapi.io/users'
+
 document.addEventListener("DOMContentLoaded",()=>{
     const inputPutId = document.getElementById('inputPutId')
     const btnPut = document.getElementById('btnPut')
     const inputPutNombre = document.getElementById('inputPutNombre')
     const inputPutApellido = document.getElementById('inputPutApellido')
+    const btnDelete = document.getElementById('btnDelete')
+    const inputDelete = document.getElementById('inputDelete')
     const btnSendChanges = document.getElementById('btnSendChanges')
     const modalPut = new bootstrap.Modal(document.getElementById('dataModal'), {
         keyboard: false
@@ -66,6 +71,25 @@ function mostrarListaCompleta() {
         console.error('Error en la solicitud GET:', error);
       });
   }
+  
+  function habilitarBoton(espacioInput, botonSeleccionado) {
+  
+    var valorInput = espacioInput.value;
+    
+    if (valorInput.trim() !== '') {
+      botonSeleccionado.removeAttribute('disabled');
+    } else {
+      botonSeleccionado.disabled = true;
+    }
+    console.log("hola")
+  }
+  
+ 
+
+    inputDelete.addEventListener('change', () =>{
+        habilitarBoton(inputDelete, btnDelete);
+    })
+})
 
 const inputNombre = document.getElementById('inputPostNombre');
 const inputApellido = document.getElementById('inputPostApellido');
@@ -114,4 +138,11 @@ btnAgregar.addEventListener('click', () => {
         btnAgregar.disabled = nombre.trim() === '' || apellido.trim() === '';
     }
 
-})
+    function mostrarDatosEnLista(data) {
+        const resultsContainer = document.getElementById('results');
+        const nuevoItem = document.createElement('li');
+        nuevoItem.classList.add('list-group-item', 'text-white');
+        nuevoItem.textContent = `Nombre: ${data.name}, Apellido: ${data.lastname}`;
+        resultsContainer.appendChild(nuevoItem);
+    }
+
