@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     const modalPut = new bootstrap.Modal(document.getElementById('dataModal'), {
         keyboard: false
       })
+      const resultsContainer = document.getElementById('results');
 
     inputPutId.addEventListener("input",()=>{
         btnPut.disabled = inputPutId.value == ""
@@ -40,12 +41,31 @@ document.addEventListener("DOMContentLoaded",()=>{
                 modalPut.hide()
             })
     })
-})
 
-let URL = 'https://65497572e182221f8d519410.mockapi.io'
-let urlUsuarios = 'https://65497572e182221f8d519410.mockapi.io/users'
-
-
+function mostrarListaCompleta() {
+    fetch('https://65497572e182221f8d519410.mockapi.io/users', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('La solicitud GET no fue exitosa');
+        }
+        return response.json();
+      })
+      .then(data => {
+        resultsContainer.innerHTML = '';
+  
+        data.forEach(item => {
+            //Mostralo aca 
+        });
+      })
+      .catch(error => {
+        console.error('Error en la solicitud GET:', error);
+      });
+  }
 
 const inputNombre = document.getElementById('inputPostNombre');
 const inputApellido = document.getElementById('inputPostApellido');
@@ -61,7 +81,7 @@ btnAgregar.addEventListener('click', () => {
         lastname: apellido
     };
 
-    fetch(URL, {
+    fetch('https://65497572e182221f8d519410.mockapi.io/users', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -78,7 +98,7 @@ btnAgregar.addEventListener('click', () => {
             console.log('Nuevo registro creado:', data);
             inputNombre.value = '';
             inputApellido.value = '';
-            mostrarDatosEnLista(data);
+            mostrarListaCompleta();
         })
         .catch(error => {
             console.error('Error en la solicitud POST:', error);
@@ -94,10 +114,4 @@ btnAgregar.addEventListener('click', () => {
         btnAgregar.disabled = nombre.trim() === '' || apellido.trim() === '';
     }
 
-    function mostrarDatosEnLista(data) {
-        const resultsContainer = document.getElementById('results');
-        const nuevoItem = document.createElement('li');
-        nuevoItem.classList.add('list-group-item', 'text-white');
-        nuevoItem.textContent = `Nombre: ${data.name}, Apellido: ${data.lastname}`;
-        resultsContainer.appendChild(nuevoItem);
-    }
+})
