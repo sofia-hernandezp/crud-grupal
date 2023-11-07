@@ -122,7 +122,6 @@ btnAgregar.addEventListener('click', () => {
             console.log('Nuevo registro creado:', data);
             inputNombre.value = '';
             inputApellido.value = '';
-            mostrarListaCompleta();
         })
         .catch(error => {
             console.error('Error en la solicitud POST:', error);
