@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     const modalPut = new bootstrap.Modal(document.getElementById('dataModal'), {
         keyboard: false
       })
-      const resultsContainer = document.getElementById('results');
+    const resultsContainer = document.getElementById('results');
 
     inputPutId.addEventListener("input",()=>{
         btnPut.disabled = inputPutId.value == ""
@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded",()=>{
                     console.log("ERROR")
                 }
                 modalPut.hide()
+                mostrarListaCompleta()
             })
     })
 
@@ -58,14 +59,21 @@ function mostrarListaCompleta() {
         if (!response.ok) {
           throw new Error('La solicitud GET no fue exitosa');
         }
-        return response.json();
+        response.json().then((lista) => {
+            resultsContainer.innerHTML = '';
+            console.log(resultsContainer)
+            lista.forEach(item => {
+                console.log(item.name)
+                let nuevoItem = document.createElement('li')
+                nuevoItem.innerHTML = ` <span>ID:${item.id}</span><br>
+                <span>NAME:${item.name}</span><br>
+                <span>LASTNAME:${item.lastname}</span>`
+                resultsContainer.appendChild(nuevoItem)
+            });
+        })
       })
       .then(data => {
-        resultsContainer.innerHTML = '';
-  
-        data.forEach(item => {
-            //Mostralo aca 
-        });
+        
       })
       .catch(error => {
         console.error('Error en la solicitud GET:', error);
