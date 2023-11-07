@@ -47,94 +47,92 @@ document.addEventListener("DOMContentLoaded",()=>{
                 mostrarListaCompleta()
             })
     })
-
-function mostrarListaCompleta() {
-    fetch('https://65497572e182221f8d519410.mockapi.io/users', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('La solicitud GET no fue exitosa');
-        }
-        response.json().then((lista) => {
-            resultsContainer.innerHTML = '';
-            console.log(resultsContainer)
-            lista.forEach(item => {
-                console.log(item.name)
-                let nuevoItem = document.createElement('li')
-                nuevoItem.innerHTML = ` <span>ID:${item.id}</span><br>
-                <span>NAME:${item.name}</span><br>
-                <span>LASTNAME:${item.lastname}</span>`
-                resultsContainer.appendChild(nuevoItem)
-            });
-        })
-      })
-      .then(data => {
-        
-      })
-      .catch(error => {
-        console.error('Error en la solicitud GET:', error);
-      });
-  }
-  
-  function habilitarBoton(espacioInput, botonSeleccionado) {
-  
-    var valorInput = espacioInput.value;
-    
-    if (valorInput.trim() !== '') {
-      botonSeleccionado.removeAttribute('disabled');
-    } else {
-      botonSeleccionado.disabled = true;
-    }
-    console.log("hola")
-  }
-  
- 
-
     inputDelete.addEventListener('change', () =>{
         habilitarBoton(inputDelete, btnDelete);
     })
-})
 
-const inputNombre = document.getElementById('inputPostNombre');
-const inputApellido = document.getElementById('inputPostApellido');
-const btnAgregar = document.getElementById('btnPost'); 
-
-btnAgregar.addEventListener('click', () => {
-
-    const nombre = inputNombre.value;
-    const apellido = inputApellido.value;
-
-    const datosAgregar = {
-        name: nombre,
-        lastname: apellido
-    };
-
-    fetch('https://65497572e182221f8d519410.mockapi.io/users', {
-        method: 'POST',
-        headers: {
+    function mostrarListaCompleta() {
+        fetch('https://65497572e182221f8d519410.mockapi.io/users', {
+          method: 'GET',
+          headers: {
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(datosAgregar)
-    })
-        .then(response => {
+          }
+        })
+          .then(response => {
             if (!response.ok) {
-                throw new Error('La solicitud POST no fue exitosa');
+              throw new Error('La solicitud GET no fue exitosa');
             }
-            return response.json();
+            response.json().then((lista) => {
+                resultsContainer.innerHTML = '';
+                console.log(resultsContainer)
+                lista.forEach(item => {
+                    console.log(item.name)
+                    let nuevoItem = document.createElement('li')
+                    nuevoItem.classList.add("border-bottom")
+                    nuevoItem.innerHTML = ` <span>ID:${item.id}</span><br>
+                    <span>NAME:${item.name}</span><br>
+                    <span>LASTNAME:${item.lastname}</span>`
+                    resultsContainer.appendChild(nuevoItem)
+                });
+            })
+          })
+          .then(data => {
+
+          })
+          .catch(error => {
+            console.error('Error en la solicitud GET:', error);
+          });
+      }
+
+    function habilitarBoton(espacioInput, botonSeleccionado) {
+
+      var valorInput = espacioInput.value;
+    
+      if (valorInput.trim() !== '') {
+        botonSeleccionado.removeAttribute('disabled');
+      } else {
+        botonSeleccionado.disabled = true;
+      }
+      console.log("hola")
+    }
+
+    const inputNombre = document.getElementById('inputPostNombre');
+    const inputApellido = document.getElementById('inputPostApellido');
+    const btnAgregar = document.getElementById('btnPost'); 
+
+    btnAgregar.addEventListener('click', () => {
+
+        const nombre = inputNombre.value;
+        const apellido = inputApellido.value;
+
+        const datosAgregar = {
+            name: nombre,
+            lastname: apellido
+        };
+
+        fetch('https://65497572e182221f8d519410.mockapi.io/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datosAgregar)
         })
-        .then(data => {
-            console.log('Nuevo registro creado:', data);
-            inputNombre.value = '';
-            inputApellido.value = '';
-        })
-        .catch(error => {
-            console.error('Error en la solicitud POST:', error);
-        });
-});
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('La solicitud POST no fue exitosa');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Nuevo registro creado:', data);
+                inputNombre.value = '';
+                inputApellido.value = '';
+                mostrarListaCompleta()
+            })
+            .catch(error => {
+                console.error('Error en la solicitud POST:', error);
+            });
+    });
 
     inputNombre.addEventListener('input', actualizarBotonAgregar);
     inputApellido.addEventListener('input', actualizarBotonAgregar);
@@ -156,24 +154,21 @@ btnAgregar.addEventListener('click', () => {
    const inputDeleteID = document.getElementById("inputDelete");
    const btnDeleteID = document.getElementById("btnDelete");
 
-   btnDeleteID.addEventListener("click", () => {
-   fetch(`https://65497572e182221f8d519410.mockapi.io/users/`+ inputDeleteID.value, {
-    method: 'DELETE',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: null
-   }).then(response => {
-    if (!response.ok) {
-        throw new Error('Error en la solicitud Delete');
-    }
-    return response.json();
+    btnDeleteID.addEventListener("click", () => {
+    fetch(`https://65497572e182221f8d519410.mockapi.io/users/`+ inputDeleteID.value, {
+     method: 'DELETE',
+     headers: {
+         'Content-Type': 'application/json'
+     },
+     body: null
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la solicitud Delete');
+        }
+        return response.json();
+     }).then(data => {
+        mostrarListaCompleta()
+     }).catch(error => {
+         console.error('Error en la solicitud Delete:', error);
+     });})
 })
-.then(data => {
-    mostrarDatosEnLista(data)
-})
-.catch(error => {
-console.error('Error en la solicitud Delete:', error);
-});
-})
-
