@@ -1,0 +1,7 @@
+GET  https://65497572e182221f8d519410.mockapi.io/users
+Content-Type: application/json
+
+{
+    "name": "Joaquin",
+    "lastname": "Ferrer"
+}
