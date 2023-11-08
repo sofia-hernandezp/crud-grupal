@@ -198,15 +198,17 @@ function mostrarDatosEnLista(data) {
 }
 
 function habilitarBoton(espacioInput, botonSeleccionado) {
+
   var valorInput = espacioInput.value;
 
-  if (valorInput.trim() !== '') {
-    botonSeleccionado.removeAttribute('disabled');
-  } else {
+  if (valorInput.trim() === '') {
     botonSeleccionado.disabled = true;
+  } else {
+    botonSeleccionado.disabled = false;
   }
 }
-inputDelete.addEventListener('change', () =>{
+
+inputDelete.addEventListener('input', () =>{
   habilitarBoton(inputDelete, btnDelete);
 })
 
