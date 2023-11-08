@@ -5,12 +5,12 @@ const errorAlert = document.getElementById('alert-error');
 
 function showAlert() {
     console.log('hola')
-  errorAlert.style.display = 'block'
+  errorAlert.classList.add('show')
+  setTimeout(()=> errorAlert.classList.remove('show'),2000)
 };
 
-showAlert();
-
 document.addEventListener("DOMContentLoaded",()=>{
+
     const inputPutId = document.getElementById('inputPutId')
     const btnPut = document.getElementById('btnPut')
     const inputPutNombre = document.getElementById('inputPutNombre')
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded",()=>{
             .then(response => {
                 if (response.status != 200) {
                     console.log("ERROR")
-                    alert('algo salio mal')
+    
                 }
                 modalPut.hide()
                 mostrarListaCompleta()
@@ -70,7 +70,6 @@ document.addEventListener("DOMContentLoaded",()=>{
         })
           .then(response => {
             if (!response.ok) {
-               
               throw new Error('La solicitud GET no fue exitosa');
             }
             response.json().then((lista) => {
@@ -92,6 +91,7 @@ document.addEventListener("DOMContentLoaded",()=>{
           })
           .catch(error => {
             console.error('Error en la solicitud GET:', error);
+            showAlert()
           });
       }
 
@@ -142,6 +142,7 @@ document.addEventListener("DOMContentLoaded",()=>{
             })
             .catch(error => {
                 console.error('Error en la solicitud POST:', error);
+                showAlert()
             });
     });
 
@@ -175,7 +176,6 @@ document.addEventListener("DOMContentLoaded",()=>{
      body: null
     }).then(response => {
         if (!response.ok) {
-            showAlert();
             throw new Error('Error en la solicitud Delete');
         }
         return response.json();
@@ -183,5 +183,6 @@ document.addEventListener("DOMContentLoaded",()=>{
         mostrarListaCompleta()
      }).catch(error => {
          console.error('Error en la solicitud Delete:', error);
+         showAlert()
      });})
 })
