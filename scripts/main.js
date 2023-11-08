@@ -1,53 +1,6 @@
 let URL = 'https://65497572e182221f8d519410.mockapi.io'
 let urlUsuarios = 'https://65497572e182221f8d519410.mockapi.io/users'
 
-
-const btnBuscar = document.getElementById("btnGet1");
-const resultsContainer = document.getElementById('results');
-const inputBuscarID = document.getElementById("inputGet1Id");
-
-btnBuscar.addEventListener("click", ()=> {
-
-    if(inputBuscarID.value !== "") {
-        mostrarDatosUsuario()
-    } else {
-        mostrarListaCompleta()
-    }
-
-})
-
-function mostrarDatosUsuario() {
-    fetch('https://65497572e182221f8d519410.mockapi.io/users/' + inputBuscarID.value, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => {
-        if (!response.ok) {
-           
-          throw new Error('La solicitud GET no fue exitosa');
-        }
-        response.json().then((lista) => {
-            resultsContainer.innerHTML = '';
-            console.log(lista)
-                let nuevoItem = document.createElement('li')
-                nuevoItem.classList.add("border-bottom")
-                nuevoItem.innerHTML = ` <span>ID:${lista.id}</span><br>
-                <span>NAME:${lista.name}</span><br>
-                <span>LASTNAME:${lista.lastname}</span>`
-                resultsContainer.appendChild(nuevoItem)
-        })
-      })
-      .then(data => {
-
-      })
-      .catch(error => {
-        console.error('Error en la solicitud GET:', error);
-        showAlert();
-      });
-}
-
 const errorAlert = document.getElementById('alert-error');
 
 function showAlert() {
@@ -114,9 +67,6 @@ btnSendChanges.addEventListener("click",()=>{
         });
 })
 
-inputDelete.addEventListener('change', () =>{
-    habilitarBoton(inputDelete, btnDelete);
-})
 function mostrarListaCompleta() {
     fetch('https://65497572e182221f8d519410.mockapi.io/users', {
       method: 'GET',
@@ -152,17 +102,52 @@ function mostrarListaCompleta() {
       });
   }
 
+const btnBuscar = document.getElementById("btnGet1");
+const inputBuscarID = document.getElementById("inputGet1Id");
 
-function habilitarBoton(espacioInput, botonSeleccionado) {
-  var valorInput = espacioInput.value;
+btnBuscar.addEventListener("click", ()=> {
 
-  if (valorInput.trim() !== '') {
-    botonSeleccionado.removeAttribute('disabled');
-  } else {
-    botonSeleccionado.disabled = true;
-  }
-  console.log("hola")
+    if(inputBuscarID.value !== "") {
+        mostrarDatosUsuario()
+    } else {
+        mostrarListaCompleta()
+    }
+
+})
+
+function mostrarDatosUsuario() {
+    fetch('https://65497572e182221f8d519410.mockapi.io/users/' + inputBuscarID.value, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+           
+          throw new Error('La solicitud GET no fue exitosa');
+        }
+        response.json().then((lista) => {
+            resultsContainer.innerHTML = '';
+            console.log(lista)
+                let nuevoItem = document.createElement('li')
+                nuevoItem.classList.add("border-bottom")
+                nuevoItem.innerHTML = ` <span>ID:${lista.id}</span><br>
+                <span>NAME:${lista.name}</span><br>
+                <span>LASTNAME:${lista.lastname}</span>`
+                resultsContainer.appendChild(nuevoItem)
+        })
+      })
+      .then(data => {
+
+      })
+      .catch(error => {
+        console.error('Error en la solicitud GET:', error);
+        showAlert();
+      });
 }
+
+
 const inputNombre = document.getElementById('inputPostNombre');
 const inputApellido = document.getElementById('inputPostApellido');
 const btnAgregar = document.getElementById('btnPost'); 
@@ -211,6 +196,20 @@ function mostrarDatosEnLista(data) {
     nuevoItem.textContent = `Nombre: ${data.name}, Apellido: ${data.lastname}`;
     resultsContainer.appendChild(nuevoItem);
 }
+
+function habilitarBoton(espacioInput, botonSeleccionado) {
+  var valorInput = espacioInput.value;
+
+  if (valorInput.trim() !== '') {
+    botonSeleccionado.removeAttribute('disabled');
+  } else {
+    botonSeleccionado.disabled = true;
+  }
+}
+inputDelete.addEventListener('change', () =>{
+  habilitarBoton(inputDelete, btnDelete);
+})
+
 const inputDeleteID = document.getElementById("inputDelete");
 const btnDeleteID = document.getElementById("btnDelete");
 
