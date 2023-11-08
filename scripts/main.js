@@ -7,7 +7,8 @@ function showAlert() {
     console.log('hola')
   errorAlert.style.display = 'block'
 };
-showAlert()
+
+showAlert();
 
 document.addEventListener("DOMContentLoaded",()=>{
     const inputPutId = document.getElementById('inputPutId')
@@ -174,7 +175,7 @@ document.addEventListener("DOMContentLoaded",()=>{
      body: null
     }).then(response => {
         if (!response.ok) {
-            alert('algo salio mal')
+            showAlert();
             throw new Error('Error en la solicitud Delete');
         }
         return response.json();
