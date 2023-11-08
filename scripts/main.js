@@ -1,6 +1,14 @@
 let URL = 'https://65497572e182221f8d519410.mockapi.io'
 let urlUsuarios = 'https://65497572e182221f8d519410.mockapi.io/users'
 
+const errorAlert = document.getElementById('alert-error');
+
+function showAlert() {
+    console.log('hola')
+  errorAlert.style.display = 'block'
+};
+showAlert()
+
 document.addEventListener("DOMContentLoaded",()=>{
     const inputPutId = document.getElementById('inputPutId')
     const btnPut = document.getElementById('btnPut')
@@ -42,6 +50,7 @@ document.addEventListener("DOMContentLoaded",()=>{
             .then(response => {
                 if (response.status != 200) {
                     console.log("ERROR")
+                    alert('algo salio mal')
                 }
                 modalPut.hide()
                 mostrarListaCompleta()
@@ -60,6 +69,7 @@ document.addEventListener("DOMContentLoaded",()=>{
         })
           .then(response => {
             if (!response.ok) {
+               
               throw new Error('La solicitud GET no fue exitosa');
             }
             response.json().then((lista) => {
@@ -155,6 +165,7 @@ document.addEventListener("DOMContentLoaded",()=>{
    const btnDeleteID = document.getElementById("btnDelete");
 
     btnDeleteID.addEventListener("click", () => {
+        showAlert()
     fetch(`https://65497572e182221f8d519410.mockapi.io/users/`+ inputDeleteID.value, {
      method: 'DELETE',
      headers: {
@@ -163,6 +174,7 @@ document.addEventListener("DOMContentLoaded",()=>{
      body: null
     }).then(response => {
         if (!response.ok) {
+            alert('algo salio mal')
             throw new Error('Error en la solicitud Delete');
         }
         return response.json();
