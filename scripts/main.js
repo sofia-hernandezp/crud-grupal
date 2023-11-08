@@ -4,7 +4,6 @@ let urlUsuarios = 'https://65497572e182221f8d519410.mockapi.io/users'
 const errorAlert = document.getElementById('alert-error');
 
 function showAlert() {
-    console.log('hola')
   errorAlert.classList.add('show')
   setTimeout(()=> errorAlert.classList.remove('show'),2000)
 };
@@ -164,8 +163,9 @@ function mostrarDatosEnLista(data) {
 }
 const inputDeleteID = document.getElementById("inputDelete");
 const btnDeleteID = document.getElementById("btnDelete");
+
  btnDeleteID.addEventListener("click", () => {
-     showAlert()
+    
  fetch(`https://65497572e182221f8d519410.mockapi.io/users/`+ inputDeleteID.value, {
   method: 'DELETE',
   headers: {
