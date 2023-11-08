@@ -8,7 +8,6 @@ function showAlert() {
   errorAlert.classList.add('show')
   setTimeout(()=> errorAlert.classList.remove('show'),2000)
 };
-showAlert()
 
 document.addEventListener("DOMContentLoaded",()=>{
 
