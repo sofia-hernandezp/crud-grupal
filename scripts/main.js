@@ -48,8 +48,6 @@ function mostrarDatosUsuario() {
       });
 }
 
- function mostrarListaCompleta() {
-
 const errorAlert = document.getElementById('alert-error');
 
 function showAlert() {
@@ -150,15 +148,11 @@ function mostrarListaCompleta() {
       })
       .catch(error => {
         console.error('Error en la solicitud GET:', error);
-      });
-  }
-
-      })
-      .catch(error => {
-        console.error('Error en la solicitud GET:', error);
         showAlert()
       });
   }
+
+
 function habilitarBoton(espacioInput, botonSeleccionado) {
   var valorInput = espacioInput.value;
 
