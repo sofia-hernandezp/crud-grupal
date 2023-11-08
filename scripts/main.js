@@ -86,15 +86,12 @@ function mostrarListaCompleta() {
                 console.log(item.name)
                 let nuevoItem = document.createElement('li')
                 nuevoItem.classList.add("border-bottom")
-                nuevoItem.innerHTML = ` <span>ID:${item.id}</span><br>
-                <span>NAME:${item.name}</span><br>
-                <span>LASTNAME:${item.lastname}</span>`
+                nuevoItem.innerHTML = ` <span>ID: ${item.id}</span><br>
+                <span>NAME: ${item.name}</span><br>
+                <span>LASTNAME: ${item.lastname}</span>`
                 resultsContainer.appendChild(nuevoItem)
             });
         })
-      })
-      .then(data => {
-
       })
       .catch(error => {
         console.error('Error en la solicitud GET:', error);
@@ -132,14 +129,11 @@ function mostrarDatosUsuario() {
             console.log(lista)
                 let nuevoItem = document.createElement('li')
                 nuevoItem.classList.add("border-bottom")
-                nuevoItem.innerHTML = ` <span>ID:${lista.id}</span><br>
-                <span>NAME:${lista.name}</span><br>
-                <span>LASTNAME:${lista.lastname}</span>`
+                nuevoItem.innerHTML = ` <span>ID: ${lista.id}</span><br>
+                <span>NAME: ${lista.name}</span><br>
+                <span>LASTNAME: ${lista.lastname}</span>`
                 resultsContainer.appendChild(nuevoItem)
         })
-      })
-      .then(data => {
-
       })
       .catch(error => {
         console.error('Error en la solicitud GET:', error);
@@ -151,6 +145,7 @@ function mostrarDatosUsuario() {
 const inputNombre = document.getElementById('inputPostNombre');
 const inputApellido = document.getElementById('inputPostApellido');
 const btnAgregar = document.getElementById('btnPost'); 
+
 btnAgregar.addEventListener('click', () => {
     const nombre = inputNombre.value;
     const apellido = inputApellido.value;
@@ -184,17 +179,11 @@ btnAgregar.addEventListener('click', () => {
 });
 inputNombre.addEventListener('input', actualizarBotonAgregar);
 inputApellido.addEventListener('input', actualizarBotonAgregar);
+
 function actualizarBotonAgregar() {
     const nombre = inputNombre.value;
     const apellido = inputApellido.value;
     btnAgregar.disabled = nombre.trim() === '' || apellido.trim() === '';
-}
-function mostrarDatosEnLista(data) {
-    const resultsContainer = document.getElementById('results');
-    const nuevoItem = document.createElement('li');
-    nuevoItem.classList.add('list-group-item', 'text-white');
-    nuevoItem.textContent = `Nombre: ${data.name}, Apellido: ${data.lastname}`;
-    resultsContainer.appendChild(nuevoItem);
 }
 
 function habilitarBoton(espacioInput, botonSeleccionado) {
